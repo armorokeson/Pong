@@ -30,18 +30,15 @@ public class InGame extends BasicGameState {
     // Scores
     private int scorePlayer = 0;
     private int scoreCPU = 0;
-    
-    //AI Movement var
-    private int dm = 0;
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 	//
 	gc.getInput().enableKeyRepeat();
 	paddlePlayer = new RoundedRectangle(5, 480 / 2, 8, 80, 3);
-	paddleCPU = new RoundedRectangle(640 - 15, 480 / 2, 8, 80, 3);
+	paddleCPU = new RoundedRectangle(640 - 10, 480 / 2, 8, 200, 3);
 	ball = new Circle(640 / 2, 480 / 2, 6);
-	ballVelocity = new Vector2f(7, 1);
-	paddleVelocity = new Vector2f(1,7);
+	ballVelocity = new Vector2f(5, 3);
+	paddleVelocity = new Vector2f(0, 3);
 	ball_impact = new Sound("assets/ball_impact.wav");
 	inGameMusic = new Music("assets/background_music.wav");
 	inGameMusic.loop(1, 0.2f);
@@ -61,10 +58,10 @@ public class InGame extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
 	// Testing for key input
 	if (gc.getInput().isKeyDown(Input.KEY_UP)) {
-	    if (paddlePlayer.getMinY() > 0)
+	    if (paddlePlayer.getMinY() >= 2)
 		paddlePlayer.setY(paddlePlayer.getY() - 10.0f);
 	} else if (gc.getInput().isKeyDown(Input.KEY_DOWN)) {
-	    if (paddlePlayer.getMaxY() < 480)
+	    if (paddlePlayer.getMaxY() <= 478)
 		paddlePlayer.setY(paddlePlayer.getY() + 10.0f);
 	}
 	
@@ -105,9 +102,15 @@ public class InGame extends BasicGameState {
 	    ballVelocity.x = -ballVelocity.getX();
 	}
 	
-	//AI paddle movement
-	dm += (ball.getCenterY() - paddleCPU.getCenterY()) * Math.pow((double)ball.getX() / (480 * 2.1), 2.5);
-	paddleCPU.setY(dm + paddleVelocity.getY());
+	paddleCPU.setY(paddleCPU.getY() + paddleVelocity.getY());
+	
+	if(paddleCPU.getMinY() <= 0){
+	    paddleVelocity.y = -paddleVelocity.getY();
+	}
+	
+	if(paddleCPU.getMaxY() >= 480){
+	    paddleVelocity.y = - paddleVelocity.getY();
+	}
     }
 
     //Returns the game-state ID of this class
