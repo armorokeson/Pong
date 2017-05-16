@@ -10,13 +10,17 @@ import me.sna.pong.gamestates.MainMenu;
 
 public class PongGame extends StateBasedGame{
     
+    //Constructor for StateBasedGame class
     public PongGame(String title) {
 	super(title);
     }
     
+    //Main method
     public static void main(String[] args){
 	try {
+	    //Creating a new game container called "Pong"
 	    AppGameContainer app = new AppGameContainer(new PongGame("Pong"));
+	    //Setting the window size and full-screen mode
 	    app.setDisplayMode(640, 480, false);
 	    app.setShowFPS(false);
 	    app.setVSync(true);
