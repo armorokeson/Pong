@@ -7,6 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import me.sna.pong.gamestates.InGame;
 import me.sna.pong.gamestates.MainMenu;
+import me.sna.pong.gamestates.TwoPlayer;
 
 public class PongGame extends StateBasedGame{
     
@@ -33,5 +34,6 @@ public class PongGame extends StateBasedGame{
     public void initStatesList(GameContainer gc) throws SlickException {
 	addState(new MainMenu());
 	addState(new InGame());
+	addState(new TwoPlayer());
     }
 }
