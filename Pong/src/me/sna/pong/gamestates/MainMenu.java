@@ -1,57 +1,79 @@
 package me.sna.pong.gamestates;
 
+import java.awt.Font;
+
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class MainMenu extends BasicGameState {
 
-    // Game state ID
-    private static final int ID = 0;
+	// Game state ID
+	private static final int ID = 0;
 
-    // Image
-    private static Image bg;
+	// Image
+	private static Image bg;
 
-    // Music
-    private static Music music;
+	// Font
+	private static TrueTypeFont font = new TrueTypeFont(new Font("Optima", Font.CENTER_BASELINE, 16), true);
 
-    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-	music = new Music("assets/Game-Menu.wav");
+	// Music
+	private static Music music;
+	private Rectangle singlePlayer;
+	private Rectangle twoPlayer;
 
-	music.loop(1, 0.5f);
-	// Background image
-	bg = new Image("assets/black.gif");
-	bg.setFilter(Image.FILTER_LINEAR);
-    }
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		music = new Music("assets/Game-Menu.wav");
 
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-	// Drawing the background image
-	bg.draw(125, 100);
-	// Drawing control command to start the game
-	g.drawString("Press space to play!", 215, 250);
-    }
-
-    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-	// Change the gamestate
-	changeState(gc, sbg);
-    }
-
-    public void changeState(GameContainer gc, StateBasedGame sbg) {
-	Input in = gc.getInput();
-	if (in.isKeyPressed(Input.KEY_SPACE)) {
-	    if(music.playing())
-		music.stop();
-	    sbg.enterState(1);
+		music.loop(1, 0.5f);
+		// Background image
+		bg = new Image("assets/black.gif");
+		bg.setFilter(Image.FILTER_LINEAR);
 	}
-    }
 
-    public int getID() {
-	return MainMenu.ID;
-    }
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+		// Drawing the background image
+		bg.draw(142, 100);
+		// Made by statements
+		font.drawString(175, 250, "Made by Sam Leighton and Armor Okeson");
+		// Button for single player
+		singlePlayer = new Rectangle(195, 300, 100, 40);
+		g.draw(singlePlayer);
+		font.drawString(201, 308, "Single Player");
+		// Button for two player
+		twoPlayer = new Rectangle(345, 300, 100, 40);
+		g.draw(twoPlayer);
+		font.drawString(356, 308, "Two Player");
+	}
+
+	public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+		// Change the gamestate
+
+		int posX = Mouse.getX();
+		int posY = Mouse.getY();
+
+		if ((posX >= 195 && posX <= 295) && (posY >= 140 && posY <= 180)) {
+			if (Mouse.isButtonDown(0)) {
+				sbg.enterState(1);
+			}
+		}
+		
+		if ((posX >= 345 && posX <= 445) && (posY >= 140 && posY <= 180)) {
+			if (Mouse.isButtonDown(0)) {
+				sbg.enterState(2);
+			}
+		}
+	}
+
+	public int getID() {
+		return MainMenu.ID;
+	}
 
 }
