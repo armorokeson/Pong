@@ -28,6 +28,7 @@ public class MainMenu extends BasicGameState {
 	private static Music music;
 	private Rectangle singlePlayer;
 	private Rectangle twoPlayer;
+	private Rectangle instructions;
 
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		music = new Music("assets/Game-Menu.wav");
@@ -51,23 +52,36 @@ public class MainMenu extends BasicGameState {
 		twoPlayer = new Rectangle(345, 300, 100, 40);
 		g.draw(twoPlayer);
 		font.drawString(356, 308, "Two Player");
+		// Instructions
+		instructions = new Rectangle(270, 360, 100, 40);
+		g.draw(instructions);
+		font.drawString(279, 369, "Instructions");
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
 		// Change the gamestate
-
+		
 		int posX = Mouse.getX();
 		int posY = Mouse.getY();
 
+		// Move to single player state
 		if ((posX >= 195 && posX <= 295) && (posY >= 140 && posY <= 180)) {
 			if (Mouse.isButtonDown(0)) {
 				sbg.enterState(1);
 			}
 		}
 		
+		// Move to two player state
 		if ((posX >= 345 && posX <= 445) && (posY >= 140 && posY <= 180)) {
 			if (Mouse.isButtonDown(0)) {
 				sbg.enterState(2);
+			}
+		}
+		
+		// Move to instructions state
+		if ((posX >= 270 && posX <= 370) && (posY >= 80 && posY <= 120)) {
+			if (Mouse.isButtonDown(0)) {
+				sbg.enterState(3);
 			}
 		}
 	}
